@@ -8,6 +8,9 @@ const Navbar = () => {
                 <Link to={'./'}>
                 <h1> Tour And Road Organiser</h1>
                 </Link>
+                <Link to={'./Venues'}>
+                <h1>Create Venues</h1>
+                </Link>
             </div>
         </header>
     );
