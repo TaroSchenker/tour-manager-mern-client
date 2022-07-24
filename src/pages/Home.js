@@ -6,15 +6,17 @@ import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-    const{ workouts, dispatch} = useWorkoutsContext()
+    const{ tourdates, dispatch} = useWorkoutsContext()
 
+
+    
     useEffect(() => { 
         const fetchWorkouts = async () => {
-            const res = await fetch('/api/workouts')
+            const res = await fetch('/api/tourdates')
             console.log(res)
             const json = await res.json();
             if(res.ok){
-                dispatch({type: 'SET_WORKOUTS', payload: json})
+                dispatch({type: 'SET_TOURDATES', payload: json})
             }
         }
         fetchWorkouts()
@@ -22,9 +24,9 @@ const Home = () => {
 
     return (
         <div className="home">
-            <div className="workouts">
-                {workouts && workouts.map(workout => (
-                    <WorkoutDetails key={workout._id} workout={workout}     />  
+            <div className="tourdates">
+                {tourdates && tourdates.map(tourdate => (
+                    <WorkoutDetails key={tourdate._id} tourdate={tourdate}     />  
                 ))}
             </div>
             <WorkoutForm />

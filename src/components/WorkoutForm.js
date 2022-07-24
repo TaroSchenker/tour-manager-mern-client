@@ -1,23 +1,55 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import AsyncSelect from 'react-select/async'
+// import VenueList from './VenueList'
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext()
-
-  const [title, setTitle] = useState('')
-  const [load, setLoad] = useState('')
-  const [reps, setReps] = useState('')
+  const [date, setDate] = useState('')
+  const [activity, setActivity] = useState('')
+  const [venue, setVenue] = useState('')
+  const [notes, setNotes] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
 
+  useEffect(() => { 
+    const fetchWorkouts = async () => {
+        const res = await fetch('/api/tourdates')
+        console.log(res)
+        const json = await res.json();
+        if(res.ok){
+            dispatch({type: 'SET_TOURDATES', payload: json})
+        }
+    }
+    fetchWorkouts()
+}, [venue])
+
+  const handleChange = (selectedOption) => {
+    setVenue(selectedOption.value)
+    }
+
+  const fetchVenues = async () => {
+    const res = await fetch('/api/venues')
+    const json = await res.json();
+    return json
+ }
+
+ const loadOptions = async (searchValue, callback) => {
+  const json = await fetchVenues()
+  const venueObject = json.map(i => {
+      return {value: i._id, label: i.name}
+  })
+  const filteredOptions = venueObject.filter(venue => venue.label.toLowerCase().includes(searchValue.toLowerCase()));
+  callback(filteredOptions)
+}
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    const workout = {title, load, reps}
+    const tourDate = { date, activity, venue, notes }
     
-    const response = await fetch('/api/workouts', {
+    const response = await fetch('/api/tourdates', {
       method: 'POST',
-      body: JSON.stringify(workout),
+      body: JSON.stringify(tourDate),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -31,43 +63,56 @@ const WorkoutForm = () => {
     if (response.ok) {
       setEmptyFields([])
       setError(null)
-      setTitle('')
-      setLoad('')
-      setReps('')
-      dispatch({type: 'CREATE_WORKOUT', payload: json})
+      setDate('')
+      setActivity('')
+      setVenue('')
+      setNotes('')
+      dispatch({type: 'CREATE_TOURDATE', payload: json})
+  
     }
-
   }
 
   return (
     <form className="create" onSubmit={handleSubmit}> 
-      <h3>Add a New Workout</h3>
+      <h3>Add a New tourDate</h3>
 
-      <label>Excersize Title:</label>
+      <label>Tour date:</label>
       <input 
         type="text" 
-        onChange={(e) => setTitle(e.target.value)} 
-        value={title}
-        className={emptyFields.includes('title') ? 'error' : ''}
+        onChange={(e) => setDate(e.target.value)} 
+        value={date}
+        className={emptyFields.includes('date') ? 'error' : ''}
       />
 
-      <label>Load (in kg):</label>
+      <label>Tour day type:</label>
       <input 
-        type="number" 
-        onChange={(e) => setLoad(e.target.value)} 
-        value={load}
+        type="string" 
+        
+        onChange={(e) => setActivity(e.target.value)} 
+        value={activity}
         className={emptyFields.includes('load') ? 'error' : ''}
       />
+      
 
-      <label>Number of Reps:</label>
-      <input 
+      <label>Show venue:</label>
+      {/* <input 
         type="number" 
-        onChange={(e) => setReps(e.target.value)} 
-        value={reps}
+        onChange={(e) => setVenue(e.target.value)} 
+        value={venue}
+        className={emptyFields.includes('reps') ? 'error' : ''}
+      /> */}
+      <AsyncSelect key={venue} loadOptions={loadOptions}  defaultOptions onChange={handleChange} />
+
+      <label>day notes:</label>
+      <input 
+        type="string" 
+        onChange={(e) => setNotes(e.target.value)} 
+        value={notes}
         className={emptyFields.includes('reps') ? 'error' : ''}
       />
+  
 
-      <button>Add Workout</button>
+      <button>Add tourDate</button>
       {error && <div className="error">{error}</div>}
     </form>
   )

@@ -4,27 +4,30 @@ import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 
-const WorkoutDetails = ({ workout }) => {
-
+const WorkoutDetails = ({ tourdate }) => {
     const { dispatch } = useWorkoutsContext()
-
     const handleClick = async() => {
-        const res = await fetch(`/api/workouts/${workout._id}`, {
+        const res = await fetch(`/api/tourdates/${tourdate._id}`, {
             method: 'DELETE', 
         })
         const json = await res.json();
 
         if(res.ok){   
-            dispatch({type: 'DELETE_WORKOUT', payload: json})
+            dispatch({type: 'DELETE_TOURDATE', payload: json})
         }
     }
 
     return ( 
-        <div className="workout-details">
-            <h4>{workout.title}</h4>
-            <p><strong>Load (kg):</strong>{workout.load}</p>
-            <p><strong>Reps:</strong>{workout.reps}</p>
-            <p> {formatDistanceToNow(new Date(workout.createdAt), {addSuffix: true})}</p>
+        <div className="tourdate-details">
+            {/* <h4>{tourdates.date}</h4> */}
+            <p><strong>Date:</strong>{tourdate.date}</p>
+            <p><strong>Type:</strong>{tourdate.activity}</p>
+            {/* if venue exists */}
+           {tourdate.venue &&<p><strong>Venue Name:</strong>{tourdate.venue.name}</p>}
+           {tourdate.venue &&<p><strong>Venue City:</strong>{tourdate.venue.city}</p>}
+           {tourdate.venue &&<p><strong>Venue Capacity:</strong>{tourdate.venue.capacity}</p>}
+            <p><strong>Notes:</strong>{tourdate.notes}</p>
+            <p> {formatDistanceToNow(new Date(tourdate.createdAt), {addSuffix: true})}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
         </div>
 

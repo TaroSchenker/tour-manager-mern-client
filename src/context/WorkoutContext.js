@@ -5,17 +5,19 @@ export const  WorkoutsContext  = createContext()
 
 export const workoutsReducer = (state, action) => {
     switch(action.type) {
-        case 'SET_WORKOUTS':
+        case 'SET_TOURDATES':
+            console.log('set tourdate payload',action.payload)
             return {
-                workouts: action.payload
+                tourdates: action.payload
             }
-        case 'CREATE_WORKOUT':
-            return {
-                workouts: [action.payload, ...state.workouts]
-            }
-        case 'DELETE_WORKOUT':
+        case 'CREATE_TOURDATE':
+             console.log('action payload',action.payload)
         return {
-            workouts: state.workouts.filter((w) => w._id !== action.payload._id)
+                tourdates: [...state.tourdates, action.payload]
+            }
+        case 'DELETE_TOURDATE':
+        return {
+            tourdates: state.tourdates.filter((w) => w._id !== action.payload._id)
         }    
         default:
             return state
@@ -24,7 +26,7 @@ export const workoutsReducer = (state, action) => {
 
 export const WorkoutsContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(workoutsReducer, {
-        workouts: null
+        tourdates: null
     })
 
     return (
