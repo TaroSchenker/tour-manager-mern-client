@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { createContext } from "react";
 
-export const  WorkoutsContext  = createContext()
+export const WorkoutsContext  = createContext()
 
 export const workoutsReducer = (state, action) => {
     switch(action.type) {
@@ -18,7 +18,7 @@ export const workoutsReducer = (state, action) => {
         case 'DELETE_TOURDATE':
         return {
             tourdates: state.tourdates.filter((w) => w._id !== action.payload._id)
-        }    
+        }     
         default:
             return state
     }

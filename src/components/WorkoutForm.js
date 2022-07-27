@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 import AsyncSelect from 'react-select/async'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 // import VenueList from './VenueList'
+
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext()
@@ -11,6 +14,8 @@ const WorkoutForm = () => {
   const [notes, setNotes] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
+
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => { 
     const fetchWorkouts = async () => {
@@ -22,7 +27,7 @@ const WorkoutForm = () => {
         }
     }
     fetchWorkouts()
-}, [venue])
+}, [dispatch, venue])
 
   const handleChange = (selectedOption) => {
     setVenue(selectedOption.value)
@@ -77,21 +82,19 @@ const WorkoutForm = () => {
       <h3>Add a New tourDate</h3>
 
       <label>Tour date:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setDate(e.target.value)} 
-        value={date}
-        className={emptyFields.includes('date') ? 'error' : ''}
-      />
-
+      <DatePicker selected={startDate} onChange={(date) => setDate(date)} />
       <label>Tour day type:</label>
-      <input 
+      {/* <input 
         type="string" 
-        
-        onChange={(e) => setActivity(e.target.value)} 
-        value={activity}
+        // onChange={(e) => setActivity(e.target.value)} 
+        // value={activity}
         className={emptyFields.includes('load') ? 'error' : ''}
-      />
+      /> */}
+        <select value={activity} onChange={(e) => setActivity(e.target.value)}>
+        <option value="Show">Show</option>
+        <option value="Travel">Tavel</option>
+        <option value="Off">Off</option>
+      </select>
       
 
       <label>Show venue:</label>
@@ -108,7 +111,7 @@ const WorkoutForm = () => {
         type="string" 
         onChange={(e) => setNotes(e.target.value)} 
         value={notes}
-        className={emptyFields.includes('reps') ? 'error' : ''}
+        // className={emptyFields.includes('reps') ? 'error' : ''}
       />
   
 

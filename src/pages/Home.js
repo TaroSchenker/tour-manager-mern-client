@@ -7,9 +7,6 @@ import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
     const{ tourdates, dispatch} = useWorkoutsContext()
-
-
-    
     useEffect(() => { 
         const fetchWorkouts = async () => {
             const res = await fetch('/api/tourdates')
@@ -21,10 +18,10 @@ const Home = () => {
         }
         fetchWorkouts()
     }, [dispatch])
-
     return (
         <div className="home">
             <div className="tourdates">
+            <h1> Tourdates in db</h1>
                 {tourdates && tourdates.map(tourdate => (
                     <WorkoutDetails key={tourdate._id} tourdate={tourdate}     />  
                 ))}
