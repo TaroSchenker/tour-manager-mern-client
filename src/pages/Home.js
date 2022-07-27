@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { useTourDatesContext } from "../hooks/useWorkoutsContext"
 
 //components
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-    const{ tourdates, dispatch} = useWorkoutsContext()
+    const{ tourdates, dispatch} = useTourDatesContext()
     useEffect(() => { 
         const fetchWorkouts = async () => {
             const res = await fetch('/api/tourdates')

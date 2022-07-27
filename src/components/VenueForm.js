@@ -3,7 +3,7 @@ import { useVenuesContext } from '../hooks/useVenuesContext'
 import AsyncSelect from 'react-select/async'
 // import VenueList from './VenueList'
 
-const WorkoutForm = () => {
+const VenueForm = () => {
   const { dispatch } = useVenuesContext()
   const [name, setName] = useState('')
   const [city, setCity] = useState('')
@@ -118,4 +118,4 @@ const WorkoutForm = () => {
   )
 }
 
-export default WorkoutForm
+export default VenueForm
