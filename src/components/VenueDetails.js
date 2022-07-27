@@ -1,9 +1,6 @@
-
 import { useVenuesContext } from "../hooks/useVenuesContext"
-
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-
 
 const VenueDetails = ({ venue }) => {
     console.log('i am in venue tails',venue)

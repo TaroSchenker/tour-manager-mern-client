@@ -6,10 +6,11 @@ const Navbar = () => {
         <header>
             <div className="container">
                 <Link to={'./'}>
-                <h1> Tour And Road Organiser</h1>
+                <h2> Tour Dates</h2>
                 </Link>
+                <h1> Tour And Road Organiser</h1>
                 <Link to={'./Venues'}>
-                <h1>Create Venues</h1>
+                <h2>Create Venues</h2>
                 </Link>
             </div>
         </header>

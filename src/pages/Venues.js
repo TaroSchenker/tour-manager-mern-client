@@ -6,10 +6,7 @@ import VenueDetails from "../components/VenueDetails";
 import VenueForm from "../components/VenueForm";
 
 const Venues = () => {
-    const{ venues, dispatch} = useVenuesContext()
-
-    console.log('out venues in Venuves.js',venues)
-    
+    const{ venues, dispatch} = useVenuesContext()   
     useEffect(() => { 
         const fetchVenues = async () => {
             const res = await fetch('/api/venues')
@@ -20,13 +17,11 @@ const Venues = () => {
             }
         }
         fetchVenues()
-        console.log('venues in Venuves.js',venues)
     }, [dispatch])
-
     return (
         <div className="home">
             <div className="tourdates">
-            <h1> hi this is the venue section</h1>
+            <h1> Venues in db</h1>
                 {venues && venues.map(venue => (
                     <VenueDetails key={venue._id} venue={venue}     />  
                 ))}
@@ -35,5 +30,4 @@ const Venues = () => {
         </div>
      );
 }
- 
 export default Venues;
