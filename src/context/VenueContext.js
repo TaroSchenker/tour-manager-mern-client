@@ -3,7 +3,7 @@ import { createContext } from "react";
 
 export const VenuesContext  = createContext()
 
-export const workoutsReducer = (state, action) => {
+export const VenueReducer = (state, action) => {
     switch(action.type) {
         case 'SET_VENUES':
             console.log('set venue payload',action.payload)
@@ -25,7 +25,7 @@ export const workoutsReducer = (state, action) => {
 }
 
 export const VenuesContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(workoutsReducer, {
+    const [state, dispatch] = useReducer(VenueReducer, {
         tourdates: null
     })
 

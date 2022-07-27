@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import { useTourDatesContext } from '../hooks/useWorkoutsContext'
 import AsyncSelect from 'react-select/async'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 const WorkoutForm = () => {
-  const { dispatch } = useWorkoutsContext()
+  const { dispatch } = useTourDatesContext()
   const [date, setDate] = useState('')
   const [activity, setActivity] = useState('')
   const [venue, setVenue] = useState('')

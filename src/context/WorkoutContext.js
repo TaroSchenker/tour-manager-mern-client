@@ -1,9 +1,9 @@
 import { useReducer } from "react";
 import { createContext } from "react";
 
-export const WorkoutsContext  = createContext()
+export const TourDatesContext  = createContext()
 
-export const workoutsReducer = (state, action) => {
+export const tourDatesReducer = (state, action) => {
     switch(action.type) {
         case 'SET_TOURDATES':
             console.log('set tourdate payload',action.payload)
@@ -24,14 +24,14 @@ export const workoutsReducer = (state, action) => {
     }
 }
 
-export const WorkoutsContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(workoutsReducer, {
+export const TourDateContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(tourDatesReducer, {
         tourdates: null
     })
 
     return (
-        <WorkoutsContext.Provider value={{...state, dispatch}}>
+        <TourDatesContext.Provider value={{...state, dispatch}}>
             { children }
-        </WorkoutsContext.Provider >  
+        </TourDatesContext.Provider >  
     ) 
 }
